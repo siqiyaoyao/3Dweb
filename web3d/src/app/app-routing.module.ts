@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import {UploadComponent } from './pages/upload/upload.component';
+import {ViewComponent } from './pages/view/view.component';
 const routes: Routes = [
   {
     path:'',
@@ -11,7 +12,10 @@ const routes: Routes = [
     path:'upload',
     component:UploadComponent
   },
-
+  {
+    path:'view',
+    component:ViewComponent
+  },
 ];
 
 @NgModule({

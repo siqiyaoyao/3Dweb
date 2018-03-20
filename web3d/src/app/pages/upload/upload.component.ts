@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
-const URL = '../../../models';
+const URL = 'http://localhost:8083/api/upload';
 
 @Component({
   selector: 'app-upload',

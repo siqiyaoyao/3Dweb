@@ -10,6 +10,7 @@ import { FooterComponent } from './footer/footer.component';
 import { UploadComponent } from './pages/upload/upload.component';
 import { CommonModule }     from '@angular/common';
 import { FileUploadModule } from 'ng2-file-upload';
+import { ViewComponent } from './pages/view/view.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { FileUploadModule } from 'ng2-file-upload';
     HomeComponent,
     HeaderComponent,
     FooterComponent,
-    UploadComponent
+    UploadComponent,
+    ViewComponent
   ],
   imports: [
     BrowserModule,
