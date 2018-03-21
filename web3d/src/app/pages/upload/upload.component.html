@@ -55,7 +55,7 @@
                   </td>
                   <td nowrap>
                       <button type="button" class="btn btn-success btn-xs"
-                              (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                              (click)="uploadFile(item)" [disabled]="item.isReady || item.isUploading || item.isSuccess">
                           <span class="glyphicon glyphicon-upload"></span> 上传
                       </button>
                       <button type="button" class="btn btn-warning btn-xs"
@@ -78,20 +78,23 @@
                       <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
                   </div>
               </div>
-              <button type="button" class="btn btn-success btn-s"
-                      (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
-                  <span class="glyphicon glyphicon-upload"></span> 全部上传
-              </button>
-              <button type="button" class="btn btn-warning btn-s"
-                      (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
-                  <span class="glyphicon glyphicon-ban-circle"></span> 全部停止
-              </button>
-              <button type="button" class="btn btn-danger btn-s"
-                      (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
-                  <span class="glyphicon glyphicon-trash"></span> 全部删除
-              </button>
+              
           </div>
-
+         
+              <section class="list-group" *ngIf="isPost">
+                  <p class="mb-1">
+                      <strong>模型:</strong> {{tempRes}}
+                  </p>
+                  <div class="d-flex w-100 justify-content-between">
+                    <a [routerLink]="['/view']">
+                      <h5 class="mb-1" [innerHTML]=tempRes></h5>
+                    </a>
+                   
+                  </div>
+                  
+                
+              </section>
+          
       </div>
 
   </div>

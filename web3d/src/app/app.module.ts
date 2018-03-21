@@ -8,9 +8,13 @@ import { HomeComponent } from './pages/home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { UploadComponent } from './pages/upload/upload.component';
+
 import { CommonModule }     from '@angular/common';
 import { FileUploadModule } from 'ng2-file-upload';
 import { ViewComponent } from './pages/view/view.component';
+
+import { BootstrapModalModule } from 'ng2-bootstrap-modal';
+import { ConfirmComponent } from './core/confirm/confirm.component';
 
 
 @NgModule({
@@ -20,13 +24,19 @@ import { ViewComponent } from './pages/view/view.component';
     HeaderComponent,
     FooterComponent,
     UploadComponent,
-    ViewComponent
+    ViewComponent,
+    ConfirmComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     CommonModule,
-    FileUploadModule
+    FileUploadModule,
+    BootstrapModalModule.forRoot({container:document.body})
+  ],
+  //Don't forget to add the component to entryComponents section
+  entryComponents: [
+    ConfirmComponent
   ],
   providers: [
     Title,

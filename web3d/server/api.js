@@ -7,7 +7,9 @@
 
 const jwt = require('express-jwt');
 const jwks = require('jwks-rsa');
-const multer = require('multer');
+var adm_zip = require('adm-zip');
+const fs = require('fs');
+
 
 
 /*
@@ -42,13 +44,24 @@ module.exports = function(app, config) {
   });
 
   app.post('/api/upload', function(req, res) {
+    
     let name = req.files.file.name;
+    //console.log(req.files.file);
+    
     req.files.file.mv('./src/assets/models/'+name, function(err) {
       if (err)
         return res.status(500).send(err);
-   
-      res.send('File uploaded!');
+    
+      var newPath = './src/assets/models/'+name+"doc";
+      var rePath = '/assets/models/'+name+"doc";
+     // var newFile = fs.mkdir(newPath);     
+      var unzip = new adm_zip('./src/assets/models/'+name);
+      unzip.extractAllTo(newPath, true);
+    
+      res.send(rePath);
     });
+    
+   //res.send("post");
   });
 
 };
