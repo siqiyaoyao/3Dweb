@@ -47,6 +47,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(methodOverride('X-HTTP-Method-Override'));
 //app.use(cors());
 
+
 // uploads
 
 app.use(function (req, res, next) {
@@ -65,11 +66,14 @@ app.use(fileUpload());
 const port = process.env.PORT || '8083';
 app.set('port', port);
 
+
+
 // Set static path to Angular app in dist
 // Don't run in dev
 if (process.env.NODE_ENV !== 'dev') {
   app.use('/', express.static(path.join(__dirname, './dist')));
 }
+
 
 /*
  |--------------------------------------
@@ -87,6 +91,7 @@ if (process.env.NODE_ENV !== 'dev') {
   });
 }
 
+app.use("/static",express.static(path.join(__dirname, 'public')));
 /*
  |--------------------------------------
  | Server

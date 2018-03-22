@@ -3,20 +3,26 @@ import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-u
 import { ConfirmComponent } from '../../core/confirm/confirm.component';
 import { DialogService } from "ng2-bootstrap-modal";
 import { Router, NavigationStart } from '@angular/router';
+import { EventEmitter } from 'events';
+import {ConectionService} from '../../core/conection.service';
 const URL = 'http://localhost:8083/api/upload';
 
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
-  styleUrls: ['./upload.component.scss']
+  styleUrls: ['./upload.component.scss'],
+  outputs:['outputValue'],//输出属性
 })
 export class UploadComponent  {
   constructor(
     private dialogService:DialogService,
-    private router: Router,) {}
+    private router: Router,
+    private service:ConectionService,
+  ) {}
     
   //相关属性
   public modelPath:string;
+  public outputValue = new EventEmitter;//发布函数
 
   //文件上传组件
   public uploader:FileUploader = new FileUploader({url: URL});
@@ -32,6 +38,7 @@ export class UploadComponent  {
   }
 
   public uploadFile(item) {
+    console.log(item);
     item.upload(); // 开始上传
     var upCom = this;
     // 上传
@@ -43,6 +50,7 @@ export class UploadComponent  {
             let tempRes = response;
             console.log(tempRes);
             upCom.modelPath = response;
+            upCom.service.modelPath = response;
             upCom.showConfirm();
         } else {
             // 上传文件后获取服务器返回的数据错误

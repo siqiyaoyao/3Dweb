@@ -37,25 +37,25 @@ module.exports = function(app, config) {
  | API Routes
  |--------------------------------------
  */
-
+ const filePath = './public/';
   // GET API root
   app.get('/api/', (req, res) => {
     res.send('API works');
   });
 
   app.post('/api/upload', function(req, res) {
-    
+    var date = new Date();
+    var ms = Date.parse(date); // 保证文件独立
     let name = req.files.file.name;
-    //console.log(req.files.file);
+    var reName = name.toString().replace('.zip','')
+  
     
-    req.files.file.mv('./src/assets/models/'+name, function(err) {
-      if (err)
-        return res.status(500).send(err);
+    req.files.file.mv(filePath+name, function(err) {
+      if (err) return res.status(500).send(err);
     
-      var newPath = './src/assets/models/'+name+"doc";
-      var rePath = '/assets/models/'+name+"doc";
-     // var newFile = fs.mkdir(newPath);     
-      var unzip = new adm_zip('./src/assets/models/'+name);
+      var newPath = filePath+reName+ms;
+      var rePath = 'http://localhost:8083/static/'+reName+ms+"/";    
+      var unzip = new adm_zip(filePath+name);
       unzip.extractAllTo(newPath, true);
     
       res.send(rePath);
@@ -63,5 +63,7 @@ module.exports = function(app, config) {
     
    //res.send("post");
   });
+
+  
 
 };
