@@ -9,6 +9,7 @@ const jwt = require('express-jwt');
 const jwks = require('jwks-rsa');
 var adm_zip = require('adm-zip');
 const fs = require('fs');
+const cmd = require('node-cmd');
 
 
 
@@ -64,6 +65,43 @@ module.exports = function(app, config) {
    //res.send("post");
   });
 
+  app.get('/api/transfer',function(req,res){
+    //res.send("get");
+    ///*
+    /*
+    cmd.get(
+    'dir'
+    ,(err,data,stderr)=>{
+      if (!err) {
+       // cmd.get('dir')
+       res.send(data);
+      
+        console.log(data)
+     } else {
+        console.log('error', err)
+     }
+    })
+    */
+    // cmd.get('notepad')
+    
+
+     cmd.get(   
+        'C:\\ProgramData\\Bimangle\\Bimangle.ForgeEngine.Revit\\CLI\\ForgeEngineRvtCLI.exe --features UseLevelCategory,GenerateThumbnail,UseCurrentViewport,UseViewOverrideGraphic --input \"D:\\Revit\\平原型·双拼式住宅 方案一.rvt\" --output \"C:\\Users\\admin\\web3d\\public\\test2\"',
+        function(err, data, stderr){
+            if (!err) {
+              let result = data.toString
+               res.send(data);
+               console.log(data)
+            } else {
+               console.log('error', err)
+            }
   
+        });
+    
+
+  
+  
+//*/
+  })
 
 };
