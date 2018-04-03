@@ -5,6 +5,7 @@ import { DialogService } from "ng2-bootstrap-modal";
 import { Router, NavigationStart } from '@angular/router';
 import { EventEmitter } from 'events';
 import {ConectionService} from '../../core/conection.service';
+import { HttpClient,HttpHeaders,HttpErrorResponse } from '@angular/common/http';//http相关服务
 const URL = 'http://localhost:8083/api/upload';
 
 @Component({
@@ -18,6 +19,7 @@ export class UploadComponent  {
     private dialogService:DialogService,
     private router: Router,
     private service:ConectionService,
+    private http:HttpClient, // 可以用http里面的方法
   ) {}
     
   //相关属性
@@ -49,8 +51,8 @@ export class UploadComponent  {
             //let tempRes = JSON.parse(response);
             let tempRes = response;
             console.log(tempRes);
-            upCom.modelPath = response;
-            upCom.service.modelPath = response;
+           // upCom.modelPath = response;
+            //upCom.service.modelPath = response;
             upCom.showConfirm();
         } else {
             // 上传文件后获取服务器返回的数据错误
@@ -60,14 +62,14 @@ export class UploadComponent  {
     
   }
   showConfirm() {
-    var upCom = this;
+    var main = this;
     let disposable = this.dialogService.addDialog(ConfirmComponent, {
         title:'上传成功', 
-        message:'是否进行模型预览'})
+        message:'是否进行模型转换'})
         .subscribe((isConfirmed)=>{
             //We get dialog result
             if(isConfirmed) {
-              this.router.navigate(['view']);
+              main.getTransfer("http://localhost:8083/api/transfer")             
                 //alert('accepted');
             }
             else {
@@ -81,6 +83,21 @@ export class UploadComponent  {
         disposable.unsubscribe();
     },10000);
     */
+}
+getTransfer(url){
+  var main = this;
+  this.http.get(url).subscribe(
+  (res)=>{
+    console.log(res);
+    main.service.modelPath = res.toString();
+    main.router.navigate(['view']);
+  },
+  /*
+  (err)=>{
+    alert('failed');
+  }
+  */
+)
 }
  /*
   private refresh(name){

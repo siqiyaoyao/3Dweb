@@ -1,3 +1,4 @@
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserModule,Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -32,7 +33,8 @@ import { ConfirmComponent } from './core/confirm/confirm.component';
     AppRoutingModule,
     CommonModule,
     FileUploadModule,
-    BootstrapModalModule.forRoot({container:document.body})
+    BootstrapModalModule.forRoot({container:document.body}),
+    HttpClientModule,
   ],
   //Don't forget to add the component to entryComponents section
   entryComponents: [

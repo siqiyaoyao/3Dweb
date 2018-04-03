@@ -11,6 +11,8 @@ var adm_zip = require('adm-zip');
 const fs = require('fs');
 const cmd = require('node-cmd');
 
+var _uploadPath = null;
+var _downLoadPath = null;
 
 
 /*
@@ -51,46 +53,31 @@ module.exports = function(app, config) {
     var reName = name.toString().replace('.zip','')
   
     
-    req.files.file.mv(filePath+name, function(err) {
+    req.files.file.mv(filePath+ms+name, function(err) {
       if (err) return res.status(500).send(err);
-    
-      var newPath = filePath+reName+ms;
-      var rePath = 'http://localhost:8083/static/'+reName+ms+"/";    
-      var unzip = new adm_zip(filePath+name);
-      unzip.extractAllTo(newPath, true);
-    
-      res.send(rePath);
+      
+      //var newPath = filePath+reName+ms;
+      //var rePath = 'http://localhost:8083/static/'+reName+ms+"/";    
+      //var unzip = new adm_zip(filePath+name);
+      //unzip.extractAllTo(newPath, true);
+      _downLoadPath =ms+'doc';
+      _uploadPath = ms+name;
+     
+      res.send(_downLoadPath);
     });
     
    //res.send("post");
   });
 
   app.get('/api/transfer',function(req,res){
-    //res.send("get");
-    ///*
-    /*
-    cmd.get(
-    'dir'
-    ,(err,data,stderr)=>{
-      if (!err) {
-       // cmd.get('dir')
-       res.send(data);
-      
-        console.log(data)
-     } else {
-        console.log('error', err)
-     }
-    })
-    */
-    // cmd.get('notepad')
-    
-
      cmd.get(   
-        'C:\\ProgramData\\Bimangle\\Bimangle.ForgeEngine.Revit\\CLI\\ForgeEngineRvtCLI.exe --features UseLevelCategory,GenerateThumbnail,UseCurrentViewport,UseViewOverrideGraphic --input \"D:\\Revit\\平原型·双拼式住宅 方案一.rvt\" --output \"C:\\Users\\admin\\web3d\\public\\test2\"',
+        'C:\\ProgramData\\Bimangle\\Bimangle.ForgeEngine.Revit\\CLI\\ForgeEngineRvtCLI.exe --features UseLevelCategory,GenerateThumbnail,UseCurrentViewport,UseViewOverrideGraphic --input \"C:\\Users\\admin\\3dweb\\web3d\\public\\'+_uploadPath+'\" --output C:\\Users\\admin\\3dweb\\web3d\\public\\'+_downLoadPath,
         function(err, data, stderr){
             if (!err) {
               let result = data.toString
-               res.send(data);
+              let returnPath = 'http://localhost:8083/static/'+_downLoadPath+"/";
+              
+               res.json(returnPath); //如果用send会让http的发生json错误
                console.log(data)
             } else {
                console.log('error', err)

@@ -24,17 +24,19 @@ export class ViewComponent implements OnInit, OnDestroy {
   ngOnInit() {
     
     this.inerpath = this.service.modelPath +this.filePath;
+    console.log(this.inerpath);
    
     var options = { env: 'Local' };
     var main = this;
-    main.viewer = new Autodesk.Viewing.Private.GuiViewer3D($("#MyViewerDiv")[0], {});;
+    main.viewer = new Autodesk.Viewing.Private.GuiViewer3D($("#MyViewerDiv")[0], {});
     Autodesk.Viewing.Initializer(options, function () {
       main.viewer.start();
       main.viewer.tearDown();
         //再次初始化Viewr
       main.viewer.setUp(main.viewer.config);
+      console.log(main.inerpath);
       main.viewer.load(main.inerpath);
-      
+     // main.viewer.load('http://localhost:8083/static/1522736638000doc/3d.svf');
       
 
     });
